@@ -1,3 +1,5 @@
+historique = []
+
 def addition(x, y):
     return x + y
 
@@ -12,7 +14,19 @@ def division(x, y):
         raise ValueError("Division par 0? Serieux?")
     return x / y
 
-def calculatrice_v2():
+def afficher_historique():
+    if historique:
+        print("Historique des calculs :")
+        for calcul in historique:
+            print(calcul)
+    else:
+        print("Aucun calcul dans l'historique.")
+
+def effacer_historique():
+    historique.clear()
+    print("L'historique a été effacé.")
+
+while True:
     try:
         nombre1 = float(input("Entre le premier nombre : "))
         operation = input("Entre l'opération (+, -, *, /) : ")
@@ -29,11 +43,22 @@ def calculatrice_v2():
         else:
             raise ValueError("Opération non valide, reveille toi..")
 
-        print("Le résultat de {} {} {} est : {}".format(nombre1, operation, nombre2, resultat))
+        calcul = f"{nombre1} {operation} {nombre2} = {resultat}"
+        historique.append(calcul)
+
+        print(f"Le résultat de {nombre1} {operation} {nombre2} est : {resultat}")
+
+        afficher_historique()
+
+        reponse_effacer = input("Voulez-vous effacer l'historique? (oui/non): ")
+        if reponse_effacer.lower() == "oui":
+            effacer_historique()
+
+        continuer = input("Voulez-vous faire un autre calcul? (oui/non): ")
+        if continuer.lower() != "oui":
+            break
 
     except ValueError as e:
         print(f"Erreur : {e}")
     except Exception as e:
-        print(f"Bonjour, une petite erreur est là pour vous: {e}")
-
-calculatrice_v2()
+        print(f"Bonjour, une petite erreur est là pour vous : {e}")
